@@ -43,6 +43,8 @@ func (r *repository) GetPings(ctx context.Context) ([]models.Ping, error) {
 }
 
 func (r *repository) AddPings(ctx context.Context, pings []models.Ping) error {
+	pings = r.deleteDuplicates(pings)
+
 	var values []any
 	var stringValues []string
 	for ind, ping := range pings {
@@ -63,4 +65,17 @@ func (r *repository) AddPings(ctx context.Context, pings []models.Ping) error {
 		}
 	}
 	return nil
+}
+
+func (r *repository) deleteDuplicates(pings []models.Ping) []models.Ping {
+	ipMap := make(map[string]struct{})
+
+	var resPings []models.Ping
+	for ind := len(pings) - 1; ind > 0; ind-- {
+		if _, ok := ipMap[pings[ind].IP]; !ok {
+			resPings = append(resPings, pings[ind])
+		}
+		ipMap[pings[ind].IP] = struct{}{}
+	}
+	return resPings
 }
