@@ -1,0 +1,16 @@
+server:
+  port: "8080"
+  read_timeout: "10s"
+  write_timeout: "10s"
+
+db:
+  host: "postgres"
+  port: "5432"
+  ssl_mode: "disable"
+
+consumer:
+  host: "kafka"
+  port: "9092"
+  group_id: "pinger"
+  auto_offset_reset: "earliest"
+  ping_topic: "ping"

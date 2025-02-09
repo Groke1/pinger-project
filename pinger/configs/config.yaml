@@ -1,0 +1,9 @@
+server:
+  containers_timeout: "10m"
+  ping_timeout: "1m"
+  workers: 10
+
+producer:
+  host: "kafka"
+  port: "9092"
+  ping_topic: "ping"
